@@ -11,7 +11,7 @@ class App extends Component {
             long: -78.9105,
             lat: 36.0014,
             zoom: 13.59,
-            coordinates: []
+            features: []
         };
     }
     componentDidMount() {
@@ -41,9 +41,10 @@ class App extends Component {
     }
 }
 
-//these come back as data.products.list
-function mapStateToProps({ coordinates}) {
-    return { coordinates };
+//these come back as features[0].geometry.coordinates
+function mapStateToProps({ features}) {
+    console.log(features)
+    return { features };
   }
 
   function mapDispatchToProps(dispatch) {
