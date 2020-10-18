@@ -1,0 +1,45 @@
+{
+   "type": "FeatureCollection",
+   "features": [
+     {
+       "type": "Feature",
+       "properties": {
+         "PatientName": "John Smith",
+         "StreetAddress": "2741 Campus Walk Ave",
+         "City": "Durham",
+         "State": "NC",
+         "Zip": "27705",
+         "marker-color": "#DC143C",
+         "marker-symbol": "hospital",
+         "marker-size": "small"
+       },
+       "geometry": {
+         "type": "Point",
+         "coordinates": [
+           -78.953101,
+           36.009612
+         ]
+       }
+     },
+     {
+       "type": "Feature",
+       "properties": {
+         "PatientName": "Joan Jones",
+         "StreetAddress": "1700 Richardson Dr",
+         "City": "Reidsville",
+         "State": "NC",
+         "Zip": "27320",
+         "marker-color": "#DC143C",
+         "marker-symbol": "hospital",
+         "marker-size": "large"
+       },
+       "geometry": {
+         "type": "Point",
+         "coordinates": [
+           -79.681801,
+           36.342360
+         ]
+       }
+     }
+   ]
+ }

@@ -4,6 +4,18 @@ import { connect } from 'react-redux';
 import mapboxgl from 'mapbox-gl';
 import { getIsochrone } from '../actions/index';
 
+mapboxgl.accessToken ='pk.eyJ1IjoiYWxmaWVmZWxkc3BhciIsImEiOiJja2dlN2p5NGYwdnNoMnNtd2YzeHZ1ZWM1In0.BEAQoG1eBJD6auVwwTUzvA';
+
+
+        
+
+    
+
+
+        
+        
+
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -32,20 +44,46 @@ class App extends Component {
 
         const map = new mapboxgl.Map({
             container: this.mapContainer,
-            style: 'mapbox://styles/mapbox/streets-v11',
+            style: 'mapbox://styles/alfiefeldspar/ckgfd04tt51lz19sx71ajimji',
             center: mapCenter,
             zoom: this.state.zoom
         });
         map.on('load', function () {
             console.log("adding marker & logging isodata")
             console.log(isoData)
+            
+            //add a center marker to map
             let marker = new mapboxgl.Marker({
                 'color': '#314ccd'
             });
             marker.setLngLat(mapCenter).addTo(map);
-
-
+            
             // When the map loads, add the source and layer
+
+            map.addSource('ptPoints', {
+                type: 'geojson',
+                data: {
+                    "type": "Feature",
+                    'geometry': {
+                        "type": "Point",
+                        "coordinates": [-78.953101, 36.009612]
+                    },
+                    "properties": {
+                        "title": "Patient Points",
+                        "marker-symbol": "hospital"
+                    }
+
+                }
+            });
+
+            map.addLayer({
+                "id": "ptLayer",
+                "type": "symbol",
+                "source": "ptPoints",
+
+            })
+
+            console.log('adding iso')
             map.addSource('iso', {
                 type: 'geojson',
                 data: isoData
