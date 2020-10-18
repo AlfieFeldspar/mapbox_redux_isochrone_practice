@@ -5,10 +5,12 @@ body {
 
 .mapContainer {
     position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
+    top: 100px;
+    right: 50px;
+    left: 500px;
     bottom: 0;
+    height: 600px;
+    width: 600px;
 }
 
 

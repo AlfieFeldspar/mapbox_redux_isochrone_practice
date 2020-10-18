@@ -1,9 +1,10 @@
 import { FETCH_ISOCHRONE} from "../actions/index";
 
-export default function(state = {features: []}, action) {
+export default function(state = {data: []}, action) {
+  console.log("in reducer!")
   switch (action.type) {
     case FETCH_ISOCHRONE:
-      return action.payload.features
+      return action.payload.data
     default:
       return state;
   }
