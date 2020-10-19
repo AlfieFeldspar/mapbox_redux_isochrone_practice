@@ -3,8 +3,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import mapboxgl from 'mapbox-gl';
 import { getIsochrone } from '../actions/index';
-const fs = require('fs');
+// const fs = require('fs');
 
+let isoData = {};
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYWxmaWVmZWxkc3BhciIsImEiOiJja2dlN2p5NGYwdnNoMnNtd2YzeHZ1ZWM1In0.BEAQoG1eBJD6auVwwTUzvA';
 
@@ -19,7 +20,6 @@ class App extends Component {
         };
     }
     componentDidMount() {
-        let isoData = {};
         // Make the API call
         let fetchData = () => {
             this.props.getIsochrone(this.state.lng, this.state.lat)
@@ -43,7 +43,8 @@ class App extends Component {
         });
         map.on('load', function () {
             console.log("adding marker & logging isodata")
-            console.log(isoData)
+            let isoCoordArray = isoData.features[0].geometry.coordinates[0];
+            console.log(isoCoordArray)
 
             //add a center marker to map
             let marker = new mapboxgl.Marker({
@@ -53,10 +54,11 @@ class App extends Component {
 
             // When the map loads, add the source and layer
 
-            let patientPoints = fs.readFileSync('../../input/patient-data.geojson');
-            patientPoints = JSON.parse(patientPoints);
-            console.log('the patient points')
-            console.log(patientPoints);
+            // let patientPoints = fs.readFileSync('../../input/patient-data.geojson');
+            // patientPoints = JSON.parse(patientPoints);
+            // console.log('the patient points')
+            // console.log(patientPoints);
+
             // map.addSource('ptPoints', {
             //     type: 'geojson',
             //     data: patientLocations
@@ -121,3 +123,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
+

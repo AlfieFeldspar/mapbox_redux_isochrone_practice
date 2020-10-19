@@ -4,7 +4,11 @@ const fs = require('fs');
 let patientPoints = fs.readFileSync('../input/patient-data.geojson');
 patientPoints = JSON.parse(patientPoints);
 
-var distance = turf.distance(patientPoints);
-fs.writeFileSync('../output/distance.geojson', JSON.stringify(distance));
+let isoPoly = fs.readFileSync('../input/isoSixtytMin.geojson');
+isoPoly = JSON.parse(isoPoly);
 
-console.log('saved distance.geojson');
+// var distance = turf.distance(patientPoints);
+// fs.writeFileSync('../output/distance.geojson', JSON.stringify(distance));
+
+// console.log('saved distance.geojson');
+// console.log(isoData);
