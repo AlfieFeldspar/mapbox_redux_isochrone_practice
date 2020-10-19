@@ -3,18 +3,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import mapboxgl from 'mapbox-gl';
 import { getIsochrone } from '../actions/index';
-
-mapboxgl.accessToken ='pk.eyJ1IjoiYWxmaWVmZWxkc3BhciIsImEiOiJja2dlN2p5NGYwdnNoMnNtd2YzeHZ1ZWM1In0.BEAQoG1eBJD6auVwwTUzvA';
-
-
-        
-
-    
+const fs = require('fs');
 
 
-        
-        
-
+mapboxgl.accessToken = 'pk.eyJ1IjoiYWxmaWVmZWxkc3BhciIsImEiOiJja2dlN2p5NGYwdnNoMnNtd2YzeHZ1ZWM1In0.BEAQoG1eBJD6auVwwTUzvA';
 
 class App extends Component {
     constructor(props) {
@@ -34,6 +26,7 @@ class App extends Component {
                 .then(response => this.setState({ data: response.payload.data }, function () {
                     console.log(this.state.data)
                     console.log('that was state.data')
+                    // fs.writeFileSync('../output/isochroneSixtyMin.geojson', JSON.stringify(this.state.data));
                     return isoData = this.state.data;
                 })
                 )
@@ -51,37 +44,29 @@ class App extends Component {
         map.on('load', function () {
             console.log("adding marker & logging isodata")
             console.log(isoData)
-            
+
             //add a center marker to map
             let marker = new mapboxgl.Marker({
                 'color': '#314ccd'
             });
             marker.setLngLat(mapCenter).addTo(map);
-            
+
             // When the map loads, add the source and layer
 
-            map.addSource('ptPoints', {
-                type: 'geojson',
-                data: {
-                    "type": "Feature",
-                    'geometry': {
-                        "type": "Point",
-                        "coordinates": [-78.953101, 36.009612]
-                    },
-                    "properties": {
-                        "title": "Patient Points",
-                        "marker-symbol": "hospital"
-                    }
+            let patientPoints = fs.readFileSync('../../input/patient-data.geojson');
+            patientPoints = JSON.parse(patientPoints);
+            console.log('the patient points')
+            console.log(patientPoints);
+            // map.addSource('ptPoints', {
+            //     type: 'geojson',
+            //     data: patientLocations
+            // });
 
-                }
-            });
-
-            map.addLayer({
-                "id": "ptLayer",
-                "type": "symbol",
-                "source": "ptPoints",
-
-            })
+            // map.addLayer({
+            //     "id": "ptLayer",
+            //     "type": "symbol",
+            //     "source": "ptPoints",
+            // })
 
             console.log('adding iso')
             map.addSource('iso', {
@@ -110,6 +95,9 @@ class App extends Component {
                 zoom: map.getZoom().toFixed(2)
             });
         });
+
+        // const pointsInIsochrone = Turf.within(patientLocations, isoData);
+        // console.log(pointsInIsochrone);
 
     };
 
